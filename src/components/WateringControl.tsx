@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Droplets } from 'lucide-react';
 import { ref, set } from 'firebase/database';
 import { database } from '../lib/firebase';
@@ -10,16 +10,17 @@ interface WateringControlProps {
 export function WateringControl({ userId }: WateringControlProps) {
   const [isWatering, setIsWatering] = useState(false);
 
+  // boton de regar
   const handleWatering = async () => {
     try {
       setIsWatering(true);
-      // Send watering command to Firebase
+      // Envía un comando de riego a Firebase
       await set(ref(database, `UsersData/${userId}/commands/water`), {
         timestamp: Date.now(),
         action: 'START'
       });
 
-      // Reset after 5 seconds
+      // Reiniciar después de 5 segundos
       setTimeout(async () => {
         await set(ref(database, `UsersData/${userId}/commands/water`), {
           timestamp: Date.now(),

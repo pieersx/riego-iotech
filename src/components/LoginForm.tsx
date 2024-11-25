@@ -1,36 +1,40 @@
-import React, { useState } from 'react';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { auth, googleProvider } from '../lib/firebase';
-import { LogIn, UserPlus, Mail } from 'lucide-react';
+import React, { useState } from "react";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth, googleProvider } from "../lib/firebase";
+import { LogIn, UserPlus, Mail } from "lucide-react";
 
 interface LoginFormProps {
   onLogin: () => void;
 }
 
 export function LoginForm({ onLogin }: LoginFormProps) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleGoogleSignIn = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
       onLogin();
     } catch (err: any) {
-      setError('Failed to sign in with Google');
+      setError("Failed to sign in with Google");
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     try {
       if (isRegistering) {
         if (password !== confirmPassword) {
-          setError('Passwords do not match');
+          setError("Passwords do not match");
           return;
         }
         await createUserWithEmailAndPassword(auth, email, password);
@@ -39,13 +43,13 @@ export function LoginForm({ onLogin }: LoginFormProps) {
       }
       onLogin();
     } catch (err: any) {
-      const errorMessage = err.message || 'An error occurred';
-      if (errorMessage.includes('email-already-in-use')) {
-        setError('Email is already registered');
-      } else if (errorMessage.includes('weak-password')) {
-        setError('Password should be at least 6 characters');
+      const errorMessage = err.message || "An error occurred";
+      if (errorMessage.includes("email-already-in-use")) {
+        setError("Email is already registered");
+      } else if (errorMessage.includes("weak-password")) {
+        setError("Password should be at least 6 characters");
       } else {
-        setError('Invalid email or password');
+        setError("Invalid email or password");
       }
     }
   };
@@ -62,7 +66,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
             )}
           </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            {isRegistering ? 'Crea tu cuenta' : 'Iniciar sesión con su cuenta'}
+            {isRegistering ? "Crea tu cuenta" : "Iniciar sesión con su cuenta"}
           </h2>
         </div>
 
@@ -98,7 +102,9 @@ export function LoginForm({ onLogin }: LoginFormProps) {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">O continuar con su correo electrónico</span>
+              <span className="px-2 bg-white text-gray-500">
+                O continuar con su correo electrónico
+              </span>
             </div>
           </div>
         </div>
@@ -129,10 +135,12 @@ export function LoginForm({ onLogin }: LoginFormProps) {
                 id="password"
                 name="password"
                 type="password"
-                autoComplete={isRegistering ? 'new-password' : 'current-password'}
+                autoComplete={
+                  isRegistering ? "new-password" : "current-password"
+                }
                 required
                 className={`appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 ${
-                  isRegistering ? '' : 'rounded-b-md'
+                  isRegistering ? "" : "rounded-b-md"
                 } focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm`}
                 placeholder="Password"
                 value={password}
@@ -171,20 +179,22 @@ export function LoginForm({ onLogin }: LoginFormProps) {
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
             >
               <Mail className="w-5 h-5 mr-2" />
-              {isRegistering ? 'Create Account' : 'Iniciar sesión con correo electrónico'}
+              {isRegistering
+                ? "Crear una cuenta"
+                : "Iniciar sesión con correo electrónico"}
             </button>
             <button
               type="button"
               onClick={() => {
                 setIsRegistering(!isRegistering);
-                setError('');
-                setPassword('');
-                setConfirmPassword('');
+                setError("");
+                setPassword("");
+                setConfirmPassword("");
               }}
               className="text-sm text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition-colors duration-200"
             >
               {isRegistering
-                ? 'Already have an account? Sign in'
+                ? "¿Ya tiene una cuenta? Iniciar sesión"
                 : "¿No tienes una cuenta? Regístrese"}
             </button>
           </div>

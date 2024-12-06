@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Thermometer,  Droplets, LogOut,  Sprout } from "lucide-react";
 import { ref, onValue, query, orderByChild, limitToLast } from "firebase/database";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth, database } from "./lib/firebase";
 import { LoginForm } from "./components/LoginForm";
+import { LoadingScreen } from "./components/LoadingScreen";
 import { SensorCard } from "./components/SensorCard";
 import { WateringControl } from "./components/WateringControl";
 import { HistoryChart } from "./components/HistoryChart";
@@ -23,6 +24,7 @@ interface HistoricalData {
 
 function App() {
   const [user, setUser] = useState(auth.currentUser);
+  const [loading, setLoading] = useState(true);
   const [sensorData, setSensorData] = useState<SensorData>({
     temperature: 0,
     humidity: 0,
@@ -38,6 +40,8 @@ function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      setLoading(false);
+
       if (user) {
         // Subscribe to real-time updates
         const userDataRef = ref(database, `UsersData/${user.uid}/current`);
@@ -89,6 +93,10 @@ function App() {
     if (moisture < 30) return 'alert';
     if (moisture < 50) return 'warning'
     return 'normal';
+  }
+
+  if (loading) {
+    return <LoadingScreen />;
   }
 
   const handleLogout = async () => {

@@ -4,6 +4,7 @@
 
 #include "wifi_config.h"
 #include "firebase_config.h"
+#include "firebase.h"
 #include "sensors.h"
 #include "actuators.h"
 

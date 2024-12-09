@@ -6,9 +6,6 @@
 
 #include <ArduinoJson.h>
 #include <DHT.h>
-#include <time.h>
-
-#include <string>
 
 // Configuración de las credenciales de WiFi
 const char *ssid = "YOUR_WIFI_SSID";

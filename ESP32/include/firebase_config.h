@@ -12,12 +12,19 @@ FirebaseData fbdo;
 FirebaseAuth auth;
 FirebaseConfig config;
 
-void setupFirebase() {
+void setupFirebase()
+{
     config.api_key = API_KEY;
     config.database_url = DATABASE_URL;
 
     Firebase.begin(&config, &auth);
     Firebase.reconnectWiFi(true);
+
+    if (Firebase.ready()) {
+        Serial.println("Firebase listo");
+    } else {
+        Serial.println("Error de conexión con Firebase");
+    }
 }
 
-#endif // FIREBASE_CONFIG
+#endif // FIREBASE_CONFIG_H

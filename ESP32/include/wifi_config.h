@@ -6,16 +6,17 @@
 const char *ssid = "WIFI_SSID";
 const char *password = "WIFI_PASSWORD";
 
-void connectWifi() {
+void connectWifi()
+{
     WiFi.begin(ssid, password);
     while (WiFi.status()!= WL_CONNECTED) {
         delay(1000);
-        Serial.print("Connecting to WiFi...");
+        Serial.print("Connectando a WiFi...");
     }
     Serial.println("");
-    Serial.println("WiFi connected");
-    Serial.println("IP address: ");
+    Serial.println("WiFi conectado");
+    Serial.println("Dirección IP: ");
     Serial.println(WiFi.localIP());
 }
 
-#endif // WIFI_CONFIG
+#endif // WIFI_CONFIG_H

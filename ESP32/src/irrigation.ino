@@ -15,8 +15,8 @@ const char *ssid = "YOUR_WIFI_SSID";
 const char *password = "YOUR_WIFI_PASSWORD";
 
 // Configuración de las credenciales de Firebase
-#define API_KEY "AIzaSyBdQDh-VkRQGcT_7T5ac9XvFVoeT0KH3UY"
-#define DATABASE_URL "https://riego-iotech-default-rtdb.firebaseio.com/"
+#define API_KEY ""
+#define DATABASE_URL ""
 
 // Objetos necesarios para interactuar con Firebase
 FirebaseData fbdo;
